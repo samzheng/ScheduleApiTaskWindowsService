@@ -14,6 +14,8 @@ namespace ScheduledApiTaskWindowsService.Core
         public ScheduledTask(ApiTaskElement config)
         {
             Config = config;
+            // 以服务启动时间作为基准：启动时不立即运行，等到下一个调度时间点才执行
+            LastRun = DateTime.Now;
         }
 
         public ApiTaskElement Config { get; private set; }
@@ -27,9 +29,9 @@ namespace ScheduledApiTaskWindowsService.Core
 
             if (type.Equals("Interval", StringComparison.OrdinalIgnoreCase))
             {
-                if (Config.IntervalMinutes <= 0) return false;
-                // 服务启动后立即运行一次
-                return !LastRun.HasValue || (now - LastRun.Value).TotalMinutes >= Config.IntervalMinutes;
+                if (Config.IntervalSeconds <= 0) return false;
+                // 距上次运行（服务启动时以启动时间为基准）满一个间隔才运行
+                return !LastRun.HasValue || (now - LastRun.Value).TotalSeconds >= Config.IntervalSeconds;
             }
 
             TimeSpan timeOfDay;

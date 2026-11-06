@@ -4,7 +4,7 @@ namespace ScheduledApiTaskWindowsService.Config
 {
     /// <summary>
     /// 单个定时任务的配置项。
-    /// scheduleType: Daily（每天 timeOfDay 运行）、Monthly（每月 dayOfMonth 日 timeOfDay 运行）、Interval（每 intervalMinutes 分钟运行一次）
+    /// scheduleType: Daily（每天 timeOfDay 运行）、Monthly（每月 dayOfMonth 日 timeOfDay 运行）、Interval（每 intervalSeconds 秒运行一次）
     /// </summary>
     public class ApiTaskElement : ConfigurationElement
     {
@@ -65,11 +65,11 @@ namespace ScheduledApiTaskWindowsService.Config
             get { return (int)this["dayOfMonth"]; }
         }
 
-        /// <summary>Interval 时使用，单位分钟</summary>
-        [ConfigurationProperty("intervalMinutes", DefaultValue = 0)]
-        public int IntervalMinutes
+        /// <summary>Interval 时使用，单位秒</summary>
+        [ConfigurationProperty("intervalSeconds", DefaultValue = 0)]
+        public int IntervalSeconds
         {
-            get { return (int)this["intervalMinutes"]; }
+            get { return (int)this["intervalSeconds"]; }
         }
     }
 }
