@@ -43,6 +43,14 @@ namespace ScheduledApiTaskWindowsService.Core
                 return now >= scheduled && (!LastRun.HasValue || LastRun.Value < scheduled);
             }
 
+            if (type.Equals("Weekly", StringComparison.OrdinalIgnoreCase))
+            {
+                if (Config.DayOfWeek < 0 || Config.DayOfWeek > 6) return false;
+                if ((int)now.DayOfWeek != Config.DayOfWeek) return false;
+                DateTime scheduled = now.Date.Add(timeOfDay);
+                return now >= scheduled && (!LastRun.HasValue || LastRun.Value < scheduled);
+            }
+
             if (type.Equals("Monthly", StringComparison.OrdinalIgnoreCase))
             {
                 if (Config.DayOfMonth < 1 || Config.DayOfMonth > 31) return false;

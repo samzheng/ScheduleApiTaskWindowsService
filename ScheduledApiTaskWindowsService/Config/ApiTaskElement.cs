@@ -4,7 +4,7 @@ namespace ScheduledApiTaskWindowsService.Config
 {
     /// <summary>
     /// 单个定时任务的配置项。
-    /// scheduleType: Daily（每天 timeOfDay 运行）、Monthly（每月 dayOfMonth 日 timeOfDay 运行）、Interval（每 intervalSeconds 秒运行一次）
+    /// scheduleType: Daily（每天 timeOfDay 运行）、Weekly（每周 dayOfWeek 的 timeOfDay 运行）、Monthly（每月 dayOfMonth 日 timeOfDay 运行）、Interval（每 intervalSeconds 秒运行一次）
     /// </summary>
     public class ApiTaskElement : ConfigurationElement
     {
@@ -56,6 +56,13 @@ namespace ScheduledApiTaskWindowsService.Config
         public string TimeOfDay
         {
             get { return (string)this["timeOfDay"]; }
+        }
+
+        /// <summary>0-6，Weekly 时使用，对应星期日到星期六</summary>
+        [ConfigurationProperty("dayOfWeek", DefaultValue = -1)]
+        public int DayOfWeek
+        {
+            get { return (int)this["dayOfWeek"]; }
         }
 
         /// <summary>1-31，Monthly 时使用；当月没有该日期时取当月最后一天</summary>
